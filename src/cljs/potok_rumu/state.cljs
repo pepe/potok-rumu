@@ -5,7 +5,7 @@
 
 (defonce store (ptk/store {:state {:potok 0}}))
 
-(def state (rx/to-atom store))
+(def ^:private state (rx/to-atom store))
 
 (def potok (rum/cursor-in state [:potok]))
 
