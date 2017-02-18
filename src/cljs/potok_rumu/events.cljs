@@ -29,6 +29,6 @@
    :go-home ->GoHome})
 
 (defn emit-to!
-  [store event]
+  [^BehaviorSubject store ^Keyword event]
   (ptk/emit! store ((event events-map))))
 
