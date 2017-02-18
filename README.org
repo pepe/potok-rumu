@@ -17,3 +17,9 @@ Then you are just one `boot dev` away from running app on `localhost:3000`.
 [rum]: https://github.com/tonsky/rum "Best ClojureScript React wrapper"
 [potok]: https://github.com/funcool/potok "Reactive streams for the ClojureScript"
 [boot]: http://boot-clj.com "Build tool for Clojure"
+
+
+This is free and unencumbered software released into the public domain.
+
+For more information, please refer to <http://unlicense.org>
+
