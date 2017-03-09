@@ -20,6 +20,6 @@
           (rum/react potok)
           " dl Rumu vypito"]
          (emitting-button store :small-shot "Malý panák")
-         (emitting-button store :small-shot "Velky panák")
+         (emitting-button store :big-shot "Velky panák")
          (emitting-button store :go-home "Jdi spát")]))
 
