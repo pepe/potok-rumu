@@ -1,11 +1,12 @@
 (ns potok-rumu.views
   (:require
    [rum.core :as rum]
-   [potok-rumu.events :refer [emit-to!]]))
+   [potok.core :as ptk]
+   [potok-rumu.events :refer [->BigShot ->SmallShot ->GoHome]]))
 
 (rum/defc emitting-button
-  [^BehaviorSubject store ^Keyword event ^String label]
-  [:button {:on-click #(emit-to! store event)} label])
+  [^BehaviorSubject store event ^String label]
+  [:button {:on-click #(ptk/emit! store event)} label])
 
 (rum/defc main < rum/reactive
   [^BehaviorSubject store ^Atom state]
@@ -19,7 +20,7 @@
          [:p
           (rum/react potok)
           " dl Rumu vypito"]
-         (emitting-button store :small-shot "Malý panák")
-         (emitting-button store :big-shot "Velky panák")
-         (emitting-button store :go-home "Jdi spát")]))
+         (emitting-button store (->SmallShot) "Malý panák")
+         (emitting-button store (->BigShot) "Velky panák")
+         (emitting-button store (->GoHome) "Jdi spát")]))
 

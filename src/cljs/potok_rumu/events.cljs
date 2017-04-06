@@ -2,7 +2,7 @@
   (:require [potok.core :as ptk]
             [beicon.core :as rx]))
 
-(deftype ^:private Drink [^Number volume]
+(defrecord ^:private Drink [^Number volume]
   ptk/UpdateEvent
   (update [_ state]
     (update state :potok (fnil + 0) volume)))
@@ -35,13 +35,3 @@
           (rx/delay 2000))
      (->> (rx/just(->Sleep))
           (rx/delay 2500)))))
-
-(def ^:private events-map
-  {:small-shot ->SmallShot
-   :big-shot ->BigShot
-   :go-home ->GoHome})
-
-(defn emit-to!
-  [^BehaviorSubject store ^Keyword event]
-  (ptk/emit! store ((event events-map))))
-
