@@ -1,37 +1,46 @@
 (ns potok-rumu.events
   (:require [potok.core :as ptk]
             [beicon.core :as rx]))
+ 
+(defrecord ^:private GoToPub []
+  ptk/UpdateEvent
+  (update [_ state]
+    (assoc state :in-pub? true)))
+
+(defrecord ^:private LeavePub []
+  ptk/UpdateEvent
+  (update [_ state]
+    (assoc state :in-pub? false)))
 
 (defrecord ^:private Drink [^Number volume]
   ptk/UpdateEvent
   (update [_ state]
     (update state :potok (fnil + 0) volume)))
 
-(deftype ^:private SmallShot []
+(defrecord ^:private SmallShot []
   ptk/WatchEvent
   (watch [_ _ _]
-    (rx/just (->Drink 0.2))))
+    (rx/just (->Drink 2))))
 
-(deftype ^:private BigShot []
+(defrecord ^:private BigShot []
   ptk/WatchEvent
   (watch [_ _ _]
-    (rx/just (->Drink 0.5))))
+    (rx/just (->Drink 5))))
 
-(deftype ^:private Drain []
+(defrecord ^:private Drain []
   ptk/UpdateEvent
   (update [_ state]
-    (assoc state :potok 0.0)))
+    (assoc state :potok 0)))
 
-(deftype ^:private Sleep []
+(defrecord ^:private Sleep []
   ptk/EffectEvent
   (effect [_ _ _]
-    (js/alert "Psssst, he is sleeping!")))
+    (js/window.setTimeout #(js/alert "Psssst, he is sleeping!") 2500)))
 
-(deftype ^:private GoHome []
+(defrecord ^:private GoHome []
   ptk/WatchEvent
   (watch [_ state stream]
     (rx/merge
-     (->> (rx/just (->Drain))
-          (rx/delay 2000))
-     (->> (rx/just(->Sleep))
-          (rx/delay 2500)))))
+     (rx/just (->Drain))
+     (rx/just (->LeavePub))
+     (rx/just(->Sleep)))))

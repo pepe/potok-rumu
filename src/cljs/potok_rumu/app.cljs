@@ -7,6 +7,5 @@
    [potok-rumu.views :as views]))
 
 (defn init []
-  (let [state (rx/to-atom store/main)]
-    (rum/mount (views/main store/main state)
-               (. js/document (getElementById "container")))))
+  (rum/mount (views/main store/main)
+             (. js/document (getElementById "container"))))

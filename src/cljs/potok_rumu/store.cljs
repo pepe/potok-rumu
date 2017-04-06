@@ -3,8 +3,8 @@
             [potok.core :as ptk]))
 
 
-(defonce ^:private initial-state
-  {:state {:potok 0}})
+(defonce initial-state
+  {:state {:potok 0 :in-pub? false}})
 
 (defonce main
   (ptk/store initial-state))

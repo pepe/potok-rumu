@@ -1,26 +1,33 @@
 (ns potok-rumu.views
   (:require
-   [rum.core :as rum]
-   [potok.core :as ptk]
-   [potok-rumu.events :refer [->BigShot ->SmallShot ->GoHome]]))
+   [rum.core :refer [defc reactive cursor react]]
+   [potok.core :refer [emit!]]
+   [beicon.core :refer [to-atom]]
+   [potok-rumu.events :refer [->GoToPub ->BigShot ->SmallShot ->GoHome]]))
 
-(rum/defc emitting-button
+(defc emit-button
   [^BehaviorSubject store event ^String label]
-  [:button {:on-click #(ptk/emit! store event)} label])
+  [:button {:on-click #(emit! store event)} label])
 
-(rum/defc main < rum/reactive
-  [^BehaviorSubject store ^Atom state]
-  (let [potok (rum/cursor-in state [:potok])]
-        [:div
-         {:style
-          {:width "90vw"
-           :padding "0 5vw"
-           :font-family "Roboto"}}
-         [:h1 "Potok Rumu"]
-         [:p
-          (rum/react potok)
-          " dl of Rumu drank"]
-         (emitting-button store (->SmallShot) "Small shot")
-         (emitting-button store (->BigShot) "Big shot")
-         (emitting-button store (->GoHome) "Go home")]))
-
+(defc main < reactive
+  [^BehaviorSubject store]
+  (let [state (to-atom store)
+        potok (cursor state :potok)
+        in-pub? (cursor state :in-pub?)]
+    (js/console.log @state)
+    [:div
+     {:style
+      {:width "90vw"
+       :padding "0 5vw"
+       :font-family "Roboto"}}
+     [:h1 "Potok Rumu"]
+     [:p
+      (react potok)
+      " cl of Rumu drank"]
+     (if (react in-pub?)
+       [:div
+        (emit-button store (->SmallShot) "Small shot")
+        (emit-button store (->BigShot) "Big shot")
+        (emit-button store (->GoHome) "Go home")]
+       [:div
+        (emit-button store (->GoToPub) "Go to pub")])]))
