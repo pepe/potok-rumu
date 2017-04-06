@@ -25,7 +25,7 @@
 (deftype ^:private Sleep []
   ptk/EffectEvent
   (effect [_ _ _]
-    (js/alert "Pššššš, už spí!")))
+    (js/alert "Psssst, he is sleeping!")))
 
 (deftype ^:private GoHome []
   ptk/WatchEvent

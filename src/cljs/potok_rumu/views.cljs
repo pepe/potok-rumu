@@ -16,11 +16,11 @@
           {:width "90vw"
            :padding "0 5vw"
            :font-family "Roboto"}}
-         [:h1 "Potok Rumu teče"]
+         [:h1 "Potok Rumu"]
          [:p
           (rum/react potok)
-          " dl Rumu vypito"]
-         (emitting-button store (->SmallShot) "Malý panák")
-         (emitting-button store (->BigShot) "Velky panák")
-         (emitting-button store (->GoHome) "Jdi spát")]))
+          " dl of Rumu drank"]
+         (emitting-button store (->SmallShot) "Small shot")
+         (emitting-button store (->BigShot) "Big shot")
+         (emitting-button store (->GoHome) "Go home")]))
 
