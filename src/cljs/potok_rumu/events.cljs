@@ -5,17 +5,17 @@
 (defrecord ^:private GoToPub []
   ptk/UpdateEvent
   (update [_ state]
-    (assoc state :in-pub? true)))
+    (assoc state :state/in-pub? true)))
 
 (defrecord ^:private LeavePub []
   ptk/UpdateEvent
   (update [_ state]
-    (assoc state :in-pub? false)))
+    (assoc state :state/in-pub? false)))
 
 (defrecord ^:private Drink [^Number volume]
   ptk/UpdateEvent
   (update [_ state]
-    (update state :potok (fnil + 0) volume)))
+    (update state :state/potok (fnil + 0) volume)))
 
 (defrecord ^:private SmallShot []
   ptk/WatchEvent
@@ -30,7 +30,7 @@
 (defrecord ^:private Drain []
   ptk/UpdateEvent
   (update [_ state]
-    (assoc state :potok 0)))
+    (assoc state :state/potok 0)))
 
 (defrecord ^:private Sleep []
   ptk/EffectEvent
@@ -41,6 +41,6 @@
   ptk/WatchEvent
   (watch [_ state stream]
     (rx/merge
-     (rx/just (->Drain))
      (rx/just (->LeavePub))
+     (rx/just (->Drain))
      (rx/just(->Sleep)))))

@@ -12,8 +12,8 @@
 (defc main < reactive
   [^BehaviorSubject store]
   (let [state (to-atom store)
-        potok (cursor state :potok)
-        in-pub? (cursor state :in-pub?)]
+        potok (cursor state :state/potok)
+        in-pub? (cursor state :state/in-pub?)]
     (js/console.log @state)
     [:div
      {:style

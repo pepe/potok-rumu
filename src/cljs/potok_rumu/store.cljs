@@ -4,7 +4,7 @@
 
 
 (defonce initial-state
-  {:state {:potok 0 :in-pub? false}})
+  {:state {:state/potok 0 :state/in-pub? false}})
 
 (defonce main
   (ptk/store initial-state))
