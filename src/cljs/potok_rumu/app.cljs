@@ -9,3 +9,9 @@
 (defn init []
   (rum/mount (views/main store/main)
              (. js/document (getElementById "container"))))
+
+(enable-console-print!)
+(defonce statelog (rx/subscribe store/main
+                       #(println "New state:" %)
+                       #(println "New error:" %)
+                       #(println "Potok terminated.")))

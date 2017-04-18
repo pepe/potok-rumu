@@ -14,7 +14,6 @@
   (let [state (to-atom store)
         potok (cursor state :state/potok)
         in-pub? (cursor state :state/in-pub?)]
-    (js/console.log @state)
     [:div
      {:style
       {:width "90vw"
