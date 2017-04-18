@@ -47,4 +47,4 @@
       (is (= (count @evs) 3))
       (is (@evs (sut/->LeavePub)))
       (is (@evs (sut/->Drain)))
-      (is (@evs (sut/->Sleep))))))
+      (is (@evs (sut/->DelayedSleep))))))
