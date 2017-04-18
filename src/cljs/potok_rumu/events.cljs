@@ -1,7 +1,7 @@
 (ns potok-rumu.events
   (:require [potok.core :as ptk]
             [beicon.core :as rx]))
- 
+
 (defrecord ^:private GoToPub []
   ptk/UpdateEvent
   (update [_ state]
