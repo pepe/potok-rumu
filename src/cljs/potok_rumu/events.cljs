@@ -35,7 +35,13 @@
 (defrecord ^:private Sleep []
   ptk/EffectEvent
   (effect [_ _ _]
-    (js/window.setTimeout #(js/alert "Psssst, he is sleeping!") 2500)))
+    (js/alert "Psssst, he is sleeping!") ))
+
+(defrecord ^:private DelayedSleep []
+  ptk/WatchEvent
+  (watch [_ _ _]
+    (->> (rx/just (->Sleep))
+         (rx/delay 2500))))  
 
 (defrecord ^:private GoHome []
   ptk/WatchEvent
@@ -43,4 +49,4 @@
     (rx/merge
      (rx/just (->LeavePub))
      (rx/just (->Drain))
-     (rx/just(->Sleep)))))
+     (rx/just (->DelayedSleep)))))
