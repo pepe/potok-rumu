@@ -4,7 +4,7 @@
             [potok-rumu.spec]
             [potok-rumu.store]
             [potok.core :as ptk]
-            [beicon.core :as rxt]
+            [beicon.core :as rx]
             [cljs.spec :as s]
             [cljs.test :as t :include-macros true]))
 
@@ -20,11 +20,11 @@
       (is (state-valid? (ptk/update ev initial-state)))))
   (testing "Small Shot"
     (let [ev (sut/->SmallShot)]
-      (rxt/on-value (ptk/watch ev initial-state (rxt/empty))
+      (rx/on-value (ptk/watch ev initial-state (rx/empty))
                     #(is (= (sut/->Drink 2) %)))))
   (testing "Big Shot"
     (let [ev (sut/->BigShot)]
-      (rxt/on-value (ptk/watch ev initial-state (rxt/empty))
+      (rx/on-value (ptk/watch ev initial-state (rx/empty))
                     #(is (= (sut/->Drink 5) %)))))
   (testing "Drain"
     (let [ev (sut/->Drain)]
@@ -43,7 +43,7 @@
   (testing "Go Home"
     (let [ev (sut/->GoHome)
           evs (atom #{})]
-      (rxt/on-value (ptk/watch ev initial-state (rxt/empty))
+      (rx/on-value (ptk/watch ev initial-state (rx/empty))
                     #(swap! evs conj %))
       (is (= (count @evs) 3))
       (is (@evs (sut/->LeavePub)))
