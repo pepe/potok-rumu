@@ -15,9 +15,10 @@
 
 (deftest test-drinks []
   (testing "Drink"
-    (let [ev (sut/->Drink 1)]
-      (is (= (:state/potok (ptk/update ev initial-state)) 1))
-      (is (state-valid? (ptk/update ev initial-state)))))
+    (let [ev (sut/->Drink 1)
+          state (ptk/update ev initial-state)]
+      (is (= (:state/potok state) 1))
+      (is (state-valid? state))))
   (testing "Small Shot"
     (let [ev (sut/->SmallShot)]
       (rx/on-value (ptk/watch ev initial-state (rx/empty))
@@ -27,19 +28,22 @@
       (rx/on-value (ptk/watch ev initial-state (rx/empty))
                     #(is (= (sut/->Drink 5) %)))))
   (testing "Drain"
-    (let [ev (sut/->Drain)]
-      (is (=  (:state/potok (ptk/update ev initial-state)) 0))
-      (is (state-valid? (ptk/update ev initial-state))))))
+    (let [ev (sut/->Drain)
+          state (ptk/update ev initial-state)]
+      (is (=  (:state/potok state) 0))
+      (is (state-valid? state)))))
 
 (deftest test-pub-presence
   (testing "Go To Pub"
-    (let [ev (sut/->GoToPub)]
-      (is (= (:state/in-pub? (ptk/update ev initial-state)) true))
-      (is (state-valid? (ptk/update ev initial-state)))))
+    (let [ev (sut/->GoToPub)
+          state (ptk/update ev initial-state)]
+      (is (= (:state/in-pub? state) true))
+      (is (state-valid? state))))
   (testing "Leave Pub"
-    (let [ev (sut/->LeavePub)]
-      (is (= (:state/in-pub? (ptk/update ev initial-state)) false))
-      (is (state-valid? (ptk/update ev initial-state)))))
+    (let [ev (sut/->LeavePub)
+          state (ptk/update ev initial-state)]
+      (is (= (:state/in-pub? state) false))
+      (is (state-valid? state))))
   (testing "Go Home"
     (let [ev (sut/->GoHome)
           evs (atom #{})]
